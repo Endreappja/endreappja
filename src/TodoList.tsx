@@ -9,7 +9,7 @@ export default function TodoList() {
 
 const { getAccessTokenSilently } = useAuth0();
 const API_URL = import.meta.env.VITE_API_URL;
-
+alert(API_URL)
   const fetchTodos = async () => {
     const res = await authFetch(`${API_URL}/todos`, {}, getAccessTokenSilently);
     const data: Todo[] = await res.json();
