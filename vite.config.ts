@@ -10,7 +10,7 @@ export default defineConfig({
       manifest: {
         name: 'Endre Appja',
         short_name: 'Endreappja',
-        start_url: '/',
+  start_url: '/?standalone=true',
         display: 'standalone',
         background_color: '#ffffff',
         theme_color: '#0d6efd',
