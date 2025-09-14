@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import type { Todo } from "./types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { authFetch } from "./api";
+import { io } from "socket.io-client";
 
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -9,10 +10,10 @@ export default function TodoList() {
 
 const { getAccessTokenSilently } = useAuth0();
 const API_URL = import.meta.env.VITE_API_URL;
+const socket = io(API_URL); 
 
   const fetchTodos = async () => {
-    const res = await authFetch(`${API_URL}/todos`, {}, getAccessTokenSilently);
-    const data: Todo[] = await res.json();
+    const data: Todo[] =  await authFetch(`${API_URL}/todos`, {}, getAccessTokenSilently);
     setTodos(data);
   };
 
@@ -20,14 +21,35 @@ const API_URL = import.meta.env.VITE_API_URL;
     fetchTodos();
   }, []);
 
+useEffect(() => {
+  socket.on("newTodo", (todo: Todo) => {
+    setTodos((prev) => [...prev, todo]);
+  });
+
+  socket.on("todoUpdated", (updated: Todo) => {
+    setTodos((prev) =>
+      prev.map((t) => (t.id === updated.id ? updated : t))
+    );
+  });
+
+  socket.on("todoDeleted", (id: number) => {
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+  });
+
+  return () => {
+    socket.off("newTodo");
+    socket.off("todoUpdated");
+    socket.off("todoDeleted");
+  };
+}, []);
+
   const addTodo = async () => {
     if (!newTitle) return;
-    const res = await authFetch(`${API_URL}/todos`, {
+    await authFetch(`${API_URL}/todos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title: newTitle }),
     }, getAccessTokenSilently);
-    await res.json();
     setNewTitle("");
     fetchTodos();
   };
