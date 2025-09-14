@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type { Todo } from "./types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { authFetch } from "./api";
-import { io } from "socket.io-client";
+import { useSocket } from "./useSocket";
 
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -10,7 +10,7 @@ export default function TodoList() {
 
 const { getAccessTokenSilently } = useAuth0();
 const API_URL = import.meta.env.VITE_API_URL;
-const socket = io(API_URL); 
+const socket = useSocket(API_URL); 
 
   const fetchTodos = async () => {
     const data: Todo[] =  await authFetch(`${API_URL}/todos`, {}, getAccessTokenSilently);
@@ -22,6 +22,8 @@ const socket = io(API_URL);
   }, []);
 
 useEffect(() => {
+  if (!socket) return;
+
   socket.on("newTodo", (todo: Todo) => {
     setTodos((prev) => [...prev, todo]);
   });
@@ -41,7 +43,7 @@ useEffect(() => {
     socket.off("todoUpdated");
     socket.off("todoDeleted");
   };
-}, []);
+}, [socket]);
 
   const addTodo = async () => {
     if (!newTitle) return;
