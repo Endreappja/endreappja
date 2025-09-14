@@ -24,7 +24,7 @@ function App() {
     });
 
     listenFCMMessages((payload) => {
-      alert(`Push notification: ${payload.notification?.title} - ${payload.notification?.body}`);
+      console.log(`Push notification: ${payload.notification?.title} - ${payload.notification?.body}`);
     });
   }, []);
 

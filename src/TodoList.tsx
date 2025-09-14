@@ -72,9 +72,24 @@ useEffect(() => {
     fetchTodos();
   };
 
+  const sendBroadcast = async () => {
+    const token = await getAccessTokenSilently();
+    await authFetch(`${API_URL}/broadcast`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    }, getAccessTokenSilently);
+    console.log("📡 Broadcast elküldve!");
+  };
+
   return (
     <div className="container mt-5">
       <h1>Endre Appja</h1>
+      <button
+        className="btn btn-warning mb-3"
+        onClick={() => sendBroadcast()}
+>
+  Küldj broadcast üzenetet
+</button>
       <div className="mb-3">
         <input
           className="form-control"
