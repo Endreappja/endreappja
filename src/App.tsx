@@ -8,7 +8,7 @@ import { LoadingOverlay } from './LoadingOverlay';
 import { registerFCMToken, listenFCMMessages } from './firebase';
 import { useAuth0 } from '@auth0/auth0-react';
 import { NotificationCenter, type ToastItem } from './NotificationCenter';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const { getAccessTokenSilently } = useAuth0();
@@ -31,7 +31,7 @@ function App() {
       console.log('noti - App.ts ', payload)
       const { title, body } = payload.notification;
       //new Notification(title ?? '', { body });
-        const id = uuid();
+        const id = uuidv4();
       setToasts((prev) => [{ id, title, body }, ...prev]);
     }
     });
@@ -40,7 +40,7 @@ function App() {
     function handleCloseToast(id: string) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }
-  
+
   return (
     <div>
       <NotificationCenter toasts={toasts} onClose={handleCloseToast} />
