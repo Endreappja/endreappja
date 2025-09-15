@@ -2,12 +2,12 @@ importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDwF3t-O6ID9rFYYUIwpix3gBAvA3oxYio",
-  authDomain: "endreappja-loc.firebaseapp.com",
-  projectId: "endreappja-loc",
-  storageBucket: "endreappja-loc.firebasestorage.app",
-  messagingSenderId: "984861279216",
-  appId: "1:984861279216:web:ca449ca7c3b9b38f3cd335",
+  apiKey: "__API_KEY__",
+  authDomain: "__AUTH_DOMAIN__",
+  projectId: "__PROJECT_ID__",
+  storageBucket: "__STORAGE_BUCKET__",
+  messagingSenderId: "__MESSAGING_SENDER_ID__",
+  appId: "__APP_ID__",
 };
 
 firebase.initializeApp(firebaseConfig);

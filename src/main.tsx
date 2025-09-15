@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
@@ -9,7 +8,6 @@ const domain = "dev-vu1jkz4wuxvj1unq.us.auth0.com";
 const clientId = "1XoBWYLS2zI4nEVjfoYi9LyBuu5kNOGp";
 
 createRoot(document.getElementById('root')!).render(
- <StrictMode>
     <Auth0Provider
       domain={domain}
       clientId={clientId}
@@ -17,5 +15,4 @@ createRoot(document.getElementById('root')!).render(
     >
       <App />
     </Auth0Provider>
-  </StrictMode>
 )
