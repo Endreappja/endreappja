@@ -11,7 +11,6 @@ const config = {
   messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.VITE_FIREBASE_APP_ID,
 };
-console.log(config)
 const out = swTemplate
   .replace('__API_KEY__', config.apiKey)
   .replace('__AUTH_DOMAIN__', config.authDomain)

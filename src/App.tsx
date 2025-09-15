@@ -23,8 +23,12 @@ function App() {
       },getAccessTokenSilently);
     });
 
-    listenFCMMessages((payload) => {
-      console.log(`Push notification: ${payload.notification?.title} - ${payload.notification?.body}`);
+    listenFCMMessages((payload) => {   
+    if (payload.notification) {
+      console.log('noti - App.ts ', payload)
+      const { title, body } = payload.notification;
+      new Notification(title ?? '', { body });
+    }
     });
   }, []);
 

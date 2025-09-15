@@ -28,7 +28,6 @@ export const registerFCMToken = async (sendTokenToBackend: (token: string) => vo
 
 export const listenFCMMessages = (callback: (payload: any) => void) => {
   onMessage(messaging, (payload) => {
-    console.log("Message received:", payload);
     callback(payload);
   });
 };
